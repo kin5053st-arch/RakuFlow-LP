@@ -343,14 +343,15 @@ section { padding: var(--section-padding) 0; }
   width: 100%;
   text-align: center;
   line-height: 1.6;
+  padding: 10px 24px;
+  border: 1px solid transparent;
+  border-radius: 12px;
 }
 .hero-pain-text.active {
   opacity: 1;
   transform: translateY(0);
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(6, 182, 212, 0.06));
-  padding: 10px 24px;
-  border-radius: 12px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.2);
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.08), inset 0 0 20px rgba(59, 130, 246, 0.03);
 }
 .hero-pain-text.solution {
@@ -360,7 +361,7 @@ section { padding: var(--section-padding) 0; }
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  border: none;
+  border-color: transparent;
   box-shadow: none;
 }
 .hero-cta { margin-bottom: 16px; }
