@@ -1,0 +1,2680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RakuFlow（ラクフロー）| 業務自動化で売上アップ・コスト削減を実現</title>
+<meta name="description" content="RakuFlowは、n8nを活用した完全オーダーメイドの業務自動化サービスです。中小企業・個人事業主の業務効率化を支援します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   CSS Custom Properties
+   ============================================ */
+:root {
+  --color-white: #FFFFFF;
+  --color-off-white: #FAFBFC;
+  --color-bg-alt: #F0F4FF;
+  --color-bg-light: #F8FAFC;
+  --color-blue: #3B82F6;
+  --color-blue-dark: #2563EB;
+  --color-indigo: #6366F1;
+  --color-indigo-light: #818CF8;
+  --color-cyan: #06B6D4;
+  --color-text: #111827;
+  --color-text-sub: #6B7280;
+  --color-border: #E5E7EB;
+  --color-green: #06C755;
+  --color-orange: #F97316;
+  --color-red: #EF4444;
+  --gradient-accent: linear-gradient(135deg, #3B82F6, #06B6D4);
+  --gradient-cta: linear-gradient(135deg, #2563EB, #3B82F6);
+  --gradient-hero: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #06B6D4 100%);
+  --font-ja: 'Noto Sans JP', sans-serif;
+  --font-en: 'Poppins', sans-serif;
+  --section-padding: 80px;
+  --container-max: 1200px;
+  --container-padding: 20px;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 40px rgba(59, 130, 246, 0.12);
+  --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.15);
+  --transition-base: 0.3s ease;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-ja);
+  font-weight: 400;
+  color: var(--color-text);
+  background: var(--color-white);
+  line-height: 1.8;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+a { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+/* ============================================
+   Typography
+   ============================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-ja);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+h2 {
+  font-size: 1.85rem;
+  text-align: center;
+  margin-bottom: 48px;
+}
+h3 { font-size: 1.25rem; }
+p { color: var(--color-text-sub); line-height: 1.8; }
+.text-gradient {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Layout
+   ============================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+section { padding: var(--section-padding) 0; }
+.bg-white { background: var(--color-white); }
+.bg-alt { background: var(--color-bg-alt); }
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary {
+  background: var(--gradient-cta);
+  color: var(--color-white);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4), var(--shadow-glow);
+}
+.btn-white {
+  background: var(--color-white);
+  color: var(--color-blue-dark);
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.btn-white:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-blue-dark);
+  border: 2px solid var(--color-blue-dark);
+}
+.btn-outline:hover {
+  background: var(--color-blue-dark);
+  color: var(--color-white);
+}
+.btn-sm {
+  padding: 10px 24px;
+  font-size: 0.875rem;
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+  background: var(--color-white);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-base);
+}
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-blue);
+  transform: translateY(-4px);
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-base);
+}
+.glass-card:hover {
+  box-shadow: 0 8px 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-4px);
+}
+
+/* ============================================
+   Icon Circles
+   ============================================ */
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+.icon-circle svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--color-blue);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ============================================
+   Fade-in Animation
+   ============================================ */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: all var(--transition-base);
+  background: rgba(255, 255, 255, 0);
+}
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+  padding: 12px 0;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+.logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--color-white) 0%, #F0F4FF 100%);
+  padding-top: 80px;
+}
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-glow-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-blue);
+  top: 10%;
+  right: -10%;
+}
+.hero-glow-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--color-cyan);
+  bottom: 20%;
+  left: -5%;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+.hero-content h1 {
+  font-size: 2.35rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+.hero-content .subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-sub);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+.hero-rotating-text {
+  min-height: 2.5em;
+  margin-bottom: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-pain-text {
+  font-size: 1.1rem;
+  color: var(--color-text-sub);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  line-height: 1.6;
+}
+.hero-pain-text.active {
+  opacity: 1;
+}
+.hero-pain-text.solution {
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-blue), var(--color-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-cta { margin-bottom: 16px; }
+.scroll-indicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+.scroll-indicator svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--color-text-sub);
+  opacity: 0.5;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ============================================
+   Pain Points
+   ============================================ */
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.pain-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.pain-card p {
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+/* ============================================
+   Services
+   ============================================ */
+.service-intro {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.service-intro p {
+  font-size: 1.05rem;
+  line-height: 2;
+  color: var(--color-text);
+}
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.service-card h3 { margin-bottom: 8px; color: var(--color-text); }
+.service-card p { font-size: 0.95rem; color: #374151; }
+.section-cta { text-align: center; }
+
+/* ============================================
+   Before/After Demo
+   ============================================ */
+#before-after { overflow: hidden; }
+.ba-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+.ba-panel { flex: 1; }
+.ba-label {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+.ba-label-before {
+  background: rgba(107, 114, 128, 0.1);
+  color: var(--color-text-sub);
+}
+.ba-label-after {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-blue);
+}
+.ba-label-wrapper { text-align: center; margin-bottom: 12px; }
+.pc-mockup {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+.pc-topbar {
+  height: 36px;
+  background: #E5E7EB;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+}
+.pc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.pc-dot-red { background: #EF4444; }
+.pc-dot-yellow { background: #F59E0B; }
+.pc-dot-green { background: #22C55E; }
+.pc-topbar-title {
+  font-size: 0.7rem;
+  color: var(--color-text-sub);
+  margin-left: 8px;
+}
+.pc-screen {
+  height: 260px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+.before-screen {
+  background: #F9FAFB;
+  color: #6B7280;
+}
+.after-screen {
+  background: #EFF6FF;
+}
+.ba-timer {
+  text-align: center;
+  font-family: var(--font-en);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-sub);
+  margin-top: 12px;
+  min-height: 32px;
+}
+.ba-badge {
+  text-align: center;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+}
+.ba-badge.show {
+  opacity: 1;
+  transform: scale(1);
+}
+.ba-badge-red {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-red);
+}
+.ba-badge-green {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16A34A;
+}
+.ba-badge-wrapper { text-align: center; }
+.ba-cta-wrapper {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+.ba-cta-wrapper.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ba-cta-wrapper p {
+  font-size: 1.1rem;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Before screen animations */
+.email-line {
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.email-line.show { opacity: 1; }
+.email-line .highlight {
+  background: rgba(59, 130, 246, 0.2);
+  padding: 1px 3px;
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+.email-line .highlight.active {
+  background: rgba(59, 130, 246, 0.4);
+}
+.spreadsheet-cell {
+  display: inline-block;
+  border: 1px solid #D1D5DB;
+  padding: 2px 6px;
+  margin: 2px;
+  min-width: 60px;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  background: white;
+}
+.typing-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: var(--color-text);
+  animation: blink 0.5s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* After screen - workflow nodes */
+.workflow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+.wf-node {
+  background: #E5E7EB;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--color-text-sub);
+  transition: all 0.4s ease;
+  min-width: 56px;
+  position: relative;
+}
+.wf-node.active {
+  background: linear-gradient(135deg, #3B82F6, #06B6D4);
+  color: white;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+}
+.wf-node-icon {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+  display: block;
+}
+.wf-arrow {
+  color: #D1D5DB;
+  font-size: 0.8rem;
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+.wf-arrow.active { color: var(--color-blue); }
+.wf-check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: #22C55E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.6rem;
+  transform: scale(0);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.wf-check.show { transform: scale(1); }
+.wf-run-btn {
+  display: block;
+  margin: 0 auto 12px;
+  padding: 4px 16px;
+  background: var(--gradient-cta);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.wf-run-btn.clicked {
+  transform: scale(0.9);
+}
+
+/* ============================================
+   Smartphone Demo
+   ============================================ */
+.phone-scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  perspective: 1000px;
+}
+.phone-side-text {
+  display: none;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 200px;
+}
+.phone-side-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.phone-side-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.phone-side-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.phone-side-text p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-sub);
+}
+.phone-side-text strong {
+  color: var(--color-text);
+}
+.iphone-mockup {
+  width: 280px;
+  height: 560px;
+  background: #1A1A1E;
+  border-radius: 44px;
+  padding: 12px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(59, 130, 246, 0.15), 0 0 60px rgba(59, 130, 246, 0.1), 0 0 0 1px rgba(255,255,255,0.1) inset;
+  transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+}
+.iphone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 28px;
+  background: #1A1A1E;
+  border-radius: 0 0 18px 18px;
+  z-index: 10;
+}
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  background: url('sumahohaikei.jpg') center center / cover no-repeat;
+  border-radius: 34px;
+  overflow: hidden;
+  position: relative;
+}
+.iphone-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(26,26,46,0.55) 0%, rgba(22,33,62,0.45) 50%, rgba(15,52,96,0.55) 100%);
+  z-index: 0;
+  border-radius: 34px;
+}
+.lock-screen {
+  text-align: center;
+  padding-top: 56px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+.lock-time {
+  font-family: var(--font-en);
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+.lock-date {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+.notifications-container {
+  position: absolute;
+  top: 140px;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.notif-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  transform: translateY(-120%);
+  opacity: 0;
+}
+.notif-card.slide-in {
+  animation: notifSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes notifSlideIn {
+  0% { transform: translateY(-120%); opacity: 0; }
+  60% { transform: translateY(6px); opacity: 1; }
+  80% { transform: translateY(-3px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.notif-card.slide-out {
+  animation: notifSlideOut 0.4s ease-in forwards;
+}
+@keyframes notifSlideOut {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120%); opacity: 0; }
+}
+.notif-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.notif-body { flex: 1; min-width: 0; }
+.notif-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+}
+.notif-text {
+  font-size: 0.65rem;
+  color: #6B7280;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+.notif-time {
+  font-size: 0.6rem;
+  color: #9CA3AF;
+  flex-shrink: 0;
+}
+.phone-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 34px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.phone-overlay.show { opacity: 1; }
+
+/* ============================================
+   Reasons
+   ============================================ */
+.reason-item {
+  margin-bottom: 64px;
+}
+.reason-item:last-child { margin-bottom: 0; }
+.reason-number {
+  font-family: var(--font-en);
+  font-size: 4rem;
+  font-weight: 700;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.55;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.reason-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+.reason-item p {
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+.reason-content-grid {
+  display: flex;
+  flex-direction: column;
+}
+.reason-visual {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   Case Studies
+   ============================================ */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.case-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-base);
+}
+.case-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
+}
+.case-band {
+  height: 6px;
+}
+.case-band-blue {
+  background: linear-gradient(90deg, #3B82F6, #6366F1);
+}
+.case-band-cyan {
+  background: linear-gradient(90deg, #06B6D4, #22C55E);
+}
+.case-body { padding: 28px; }
+.case-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.case-tag-blue {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-blue);
+}
+.case-tag-cyan {
+  background: rgba(6, 182, 212, 0.1);
+  color: var(--color-cyan);
+}
+.case-body h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+.case-body > p {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #374151;
+}
+.case-tasks {
+  padding-left: 0;
+}
+.case-tasks li {
+  font-size: 0.95rem;
+  color: #374151;
+  padding: 5px 0;
+  padding-left: 20px;
+  position: relative;
+}
+.case-tasks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+}
+
+/* ============================================
+   Count Up
+   ============================================ */
+#count-up { position: relative; }
+.count-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+.count-icon {
+  margin: 0 auto 8px;
+}
+.count-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--color-blue);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.count-number-wrapper {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+}
+.count-number {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 3rem;
+  background: linear-gradient(135deg, #3B82F6, #06B6D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  line-height: 1.1;
+}
+.count-suffix {
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #3B82F6, #06B6D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.count-divider {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #3B82F6, #06B6D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.count-label {
+  font-size: 0.95rem;
+  color: var(--color-text-sub);
+  margin-top: 4px;
+}
+.count-sub-items {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 6px;
+}
+.count-sub-item {
+  font-size: 0.65rem;
+  color: var(--color-text-sub);
+  background: rgba(59, 130, 246, 0.06);
+  padding: 2px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+@keyframes countBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.count-item.completed .count-number-wrapper {
+  animation: countBounce 0.4s ease-out;
+}
+
+/* ============================================
+   Service Flow
+   ============================================ */
+.flow-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+  position: relative;
+}
+.flow-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.flow-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient-cta);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.flow-step:first-child .flow-number {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+.flow-content h3 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+.flow-content p {
+  font-size: 0.9rem;
+}
+.flow-content .flow-note {
+  font-size: 0.8rem;
+  color: var(--color-blue);
+  margin-top: 4px;
+}
+.flow-line {
+  position: absolute;
+  left: 43px;
+  top: 48px;
+  bottom: 48px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-blue), var(--color-cyan));
+  opacity: 0.2;
+  z-index: 0;
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.faq-item {
+  background: var(--color-white);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: border-color var(--transition-base);
+}
+.faq-item.open {
+  border-left: 3px solid var(--color-blue);
+}
+.faq-question {
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  background: none;
+  font-family: var(--font-ja);
+}
+.faq-question:hover { color: var(--color-blue); }
+.faq-chevron {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-text-sub);
+  fill: none;
+  stroke-width: 2;
+  transition: transform var(--transition-base);
+  flex-shrink: 0;
+}
+.faq-item.open .faq-chevron {
+  transform: rotate(180deg);
+  stroke: var(--color-blue);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 24px;
+}
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding: 0 24px 20px;
+}
+.faq-answer p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ============================================
+   Final CTA
+   ============================================ */
+#final-cta {
+  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 30%, #6366F1 60%, #06B6D4 100%);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+#final-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+#final-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+#final-cta .container { position: relative; z-index: 1; }
+#final-cta h2 {
+  color: white;
+  font-size: 1.75rem;
+  margin-bottom: 28px;
+  line-height: 1.35;
+}
+#final-cta p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 36px;
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(255,255,255,0.2), 0 0 0 0 rgba(255,255,255,0.4); }
+  50% { box-shadow: 0 8px 30px rgba(255,255,255,0.35), 0 0 0 10px rgba(255,255,255,0); }
+}
+#final-cta .btn-white {
+  margin-bottom: 16px;
+  animation: ctaPulse 2.5s ease-in-out infinite;
+  font-size: 1.1rem;
+  padding: 18px 48px;
+}
+.cta-eyebrow {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+.cta-note {
+  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin-bottom: 0 !important;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+  background: #111827;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 48px 0 32px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.footer-links a {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color var(--transition-base);
+}
+.footer-links a:hover { color: white; }
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   Responsive: Tablet (768px+)
+   ============================================ */
+@media (min-width: 768px) {
+  :root {
+    --section-padding: 100px;
+    --container-padding: 32px;
+  }
+  h2 { font-size: 2.15rem; }
+  .hero-content h1 { font-size: 3.25rem; }
+  .hero-content .subtitle { font-size: 1.25rem; }
+  .hero-pain-text { font-size: 1.35rem; }
+  .hero-pain-text.solution { font-size: 1.7rem; }
+  .pain-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .service-grid { grid-template-columns: repeat(2, 1fr); }
+  .ba-container { flex-direction: row; gap: 24px; }
+  .pc-screen { height: 280px; }
+  .cases-grid { grid-template-columns: repeat(2, 1fr); }
+  .count-grid { grid-template-columns: repeat(4, 1fr); }
+  .count-number { font-size: 3.5rem; }
+  .count-sub-item { font-size: 0.7rem; }
+  .flow-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+  .flow-line { display: none; }
+  #final-cta h2 { font-size: 2.25rem; }
+  #final-cta p { font-size: 1.1rem; }
+  .phone-side-text { display: flex; }
+}
+
+/* ============================================
+   Responsive: Desktop (1024px+)
+   ============================================ */
+@media (min-width: 1024px) {
+  :root {
+    --section-padding: 120px;
+    --container-padding: 40px;
+  }
+  h2 { font-size: 2.5rem; }
+  .hero-content h1 { font-size: 4rem; }
+  .hero-content .subtitle { font-size: 1.35rem; }
+  .hero-pain-text { font-size: 1.5rem; }
+  .hero-pain-text.solution { font-size: 1.9rem; }
+  .pain-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .reason-content-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  .reason-visual {
+    display: flex;
+  }
+  .reason-item:nth-child(even) .reason-content-grid {
+    direction: rtl;
+  }
+  .reason-item:nth-child(even) .reason-content-grid > * {
+    direction: ltr;
+  }
+  .flow-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .count-number { font-size: 4rem; }
+  .case-body h3 { font-size: 1.35rem; white-space: nowrap; }
+  #final-cta h2 { font-size: 2.75rem; }
+  #final-cta p { font-size: 1.15rem; }
+  .iphone-mockup {
+    width: 300px;
+    height: 600px;
+  }
+  .wf-node {
+    padding: 10px 8px;
+    min-width: 64px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     Header
+     ============================================ -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a href="#hero" class="logo">RakuFlow</a>
+    <a href="#final-cta" class="btn btn-primary btn-sm" aria-label="無料相談に申し込む">無料相談する</a>
+  </div>
+</header>
+
+<!-- ============================================
+     Main Content
+     ============================================ -->
+<main>
+
+<!-- Hero Section -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-content">
+    <p class="logo" style="font-size:1.1rem; margin-bottom:20px;">RakuFlow</p>
+    <h1>その手作業、<br>まだ続けますか？</h1>
+    <div class="hero-rotating-text" id="hero-rotating">
+      <p class="hero-pain-text active">また同じメールを手打ち…</p>
+    </div>
+    <p class="subtitle">RakuFlowは、あなたの業務に合わせた完全オーダーメイドの自動化で、<br>売上アップとコスト削減を同時に実現します。</p>
+    <div class="hero-cta">
+      <a href="#final-cta" class="btn btn-primary" aria-label="まずは無料で相談する">まずは無料で相談する</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+  </div>
+</section>
+
+<!-- Pain Points Section -->
+<section id="pain-points" class="bg-alt">
+  <div class="container">
+    <h2 class="fade-in-up">こんなお悩み、ありませんか？</h2>
+    <div class="pain-grid">
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <p>毎日のメール対応や事務作業に追われ、売上に直結する仕事に時間を使えない</p>
+        </div>
+      </div>
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <p>人を雇いたいが人件費が厳しい。少人数で回しているが限界を感じている</p>
+        </div>
+      </div>
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <p>手作業によるミスが続き、クレームや売上の機会損失が発生している</p>
+        </div>
+      </div>
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="14" y="2" width="8" height="8" rx="1"/><rect x="2" y="14" width="8" height="8" rx="1"/><rect x="14" y="14" width="8" height="8" rx="1"/></svg>
+        </div>
+        <div>
+          <p>複数のツールがバラバラで連携できず、情報の転記作業が毎日発生する</p>
+        </div>
+      </div>
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <p>自動化に興味はあるけど、何から手をつければいいのか分からない</p>
+        </div>
+      </div>
+      <div class="glass-card pain-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+        </div>
+        <div>
+          <p>毎月の請求書・報告書の作成に丸一日かかり、本来の業務が進まない</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="bg-white">
+  <div class="container">
+    <h2 class="fade-in-up">あなたの"めんどくさい"を、<br>仕組みが代わりにやります。</h2>
+    <div class="service-intro fade-in-up">
+      <p>RakuFlowは、n8nを活用した業務自動化サービスです。<br>
+      メール送信、予約管理、データ集計、SNS連携、顧客対応——<br>
+      あらゆる繰り返し業務を、あなたの業務に最適な形で自動化します。</p>
+      <p style="margin-top:16px;">既製品のツールを導入するのではなく、<br>
+      あなたの業務フローを深く理解した上で、<br>
+      ゼロから最適なワークフローを設計・構築します。</p>
+    </div>
+    <div class="service-grid">
+      <div class="card service-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>メール・LINE自動送信</h3>
+        <p>顧客への案内メール、リマインド通知、フォローアップを自動化。送り忘れゼロに。</p>
+      </div>
+      <div class="card service-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>予約・スケジュール管理</h3>
+        <p>予約受付から確認通知、リマインドまで一気通貫で自動化。電話対応の負担を大幅削減。</p>
+      </div>
+      <div class="card service-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>データ収集・レポート自動作成</h3>
+        <p>アンケート回収、売上データ集計、レポート作成を自動化。数字の見える化を実現。</p>
+      </div>
+      <div class="card service-card fade-in-up">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>複数ツールの連携・統合</h3>
+        <p>バラバラだったツールをつなぎ、転記作業を完全廃止。情報の一元管理を実現。</p>
+      </div>
+    </div>
+    <div class="section-cta fade-in-up">
+      <a href="#final-cta" class="btn btn-primary" aria-label="無料相談で詳しく聞く">無料相談で詳しく聞く</a>
+    </div>
+  </div>
+</section>
+
+<!-- Before/After Demo -->
+<section id="before-after" class="bg-alt">
+  <div class="container">
+    <h2 class="fade-in-up">同じ作業、こんなに差がつきます。</h2>
+    <div class="ba-container">
+      <!-- Before Panel -->
+      <div class="ba-panel">
+        <div class="ba-label-wrapper"><span class="ba-label ba-label-before">Before：手作業</span></div>
+        <div class="pc-mockup">
+          <div class="pc-topbar">
+            <span class="pc-dot pc-dot-red"></span>
+            <span class="pc-dot pc-dot-yellow"></span>
+            <span class="pc-dot pc-dot-green"></span>
+            <span class="pc-topbar-title">メール・スプレッドシート</span>
+          </div>
+          <div class="pc-screen before-screen" id="before-screen">
+            <div style="color:#9CA3AF;text-align:center;padding-top:80px;font-size:0.85rem;">スクロールするとデモが開始します</div>
+          </div>
+        </div>
+        <div class="ba-timer" id="before-timer">0:00</div>
+        <div class="ba-badge-wrapper"><span class="ba-badge ba-badge-red" id="before-badge">手作業：15分</span></div>
+      </div>
+      <!-- After Panel -->
+      <div class="ba-panel">
+        <div class="ba-label-wrapper"><span class="ba-label ba-label-after">After：RakuFlow</span></div>
+        <div class="pc-mockup">
+          <div class="pc-topbar">
+            <span class="pc-dot pc-dot-red"></span>
+            <span class="pc-dot pc-dot-yellow"></span>
+            <span class="pc-dot pc-dot-green"></span>
+            <span class="pc-topbar-title">RakuFlow ワークフロー</span>
+          </div>
+          <div class="pc-screen after-screen" id="after-screen">
+            <button class="wf-run-btn" id="wf-run-btn">▶ 実行</button>
+            <div class="workflow-container" id="workflow-nodes">
+              <div class="wf-node" data-index="0">
+                <span class="wf-node-icon">⚡</span>
+                <span>トリガー</span>
+                <div class="wf-check">✓</div>
+              </div>
+              <span class="wf-arrow">→</span>
+              <div class="wf-node" data-index="1">
+                <span class="wf-node-icon">✉️</span>
+                <span>メール送信</span>
+                <div class="wf-check">✓</div>
+              </div>
+              <span class="wf-arrow">→</span>
+              <div class="wf-node" data-index="2">
+                <span class="wf-node-icon">📊</span>
+                <span>データ記録</span>
+                <div class="wf-check">✓</div>
+              </div>
+              <span class="wf-arrow">→</span>
+              <div class="wf-node" data-index="3">
+                <span class="wf-node-icon">💬</span>
+                <span>LINE通知</span>
+                <div class="wf-check">✓</div>
+              </div>
+              <span class="wf-arrow">→</span>
+              <div class="wf-node" data-index="4">
+                <span class="wf-node-icon">✅</span>
+                <span>完了</span>
+                <div class="wf-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ba-timer" id="after-timer">0:00</div>
+        <div class="ba-badge-wrapper"><span class="ba-badge ba-badge-green" id="after-badge">自動化：3秒</span></div>
+      </div>
+    </div>
+    <div class="ba-cta-wrapper" id="ba-cta">
+      <p>この差が毎日積み重なったら、月に何時間の余裕が生まれますか？</p>
+      <a href="#final-cta" class="btn btn-primary" aria-label="無料相談で詳しく聞く">無料相談で詳しく聞く</a>
+    </div>
+  </div>
+</section>
+
+<!-- Smartphone Notification Demo -->
+<section id="smartphone-demo" class="bg-white">
+  <div class="container">
+    <h2 class="fade-in-up">あなたが寝ている間も、<br>RakuFlowが働いています。</h2>
+    <div class="phone-scene fade-in-up">
+      <div class="phone-side-text phone-side-left" id="phone-text-left">
+        <div class="phone-side-item">
+          <div class="phone-side-icon" style="background:rgba(6,199,85,0.1);color:#06C755;">📱</div>
+          <p>予約受付を<br><strong>24時間自動対応</strong></p>
+        </div>
+        <div class="phone-side-item">
+          <div class="phone-side-icon" style="background:rgba(59,130,246,0.1);color:#3B82F6;">✉️</div>
+          <p>メール送信を<br><strong>完全自動化</strong></p>
+        </div>
+      </div>
+      <div class="iphone-mockup">
+        <div class="iphone-notch"></div>
+        <div class="iphone-screen">
+          <div class="lock-screen">
+            <div class="lock-time">9:41</div>
+            <div class="lock-date">3月5日 水曜日</div>
+          </div>
+          <div class="notifications-container" id="notifications"></div>
+          <div class="phone-overlay" id="phone-overlay">すべて自動。手作業ゼロ。</div>
+        </div>
+      </div>
+      <div class="phone-side-text phone-side-right" id="phone-text-right">
+        <div class="phone-side-item">
+          <div class="phone-side-icon" style="background:rgba(6,199,85,0.1);color:#06C755;">✅</div>
+          <p>リマインドも<br><strong>エラーゼロで配信</strong></p>
+        </div>
+        <div class="phone-side-item">
+          <div class="phone-side-icon" style="background:rgba(249,115,22,0.1);color:#F97316;">📊</div>
+          <p>レポートも<br><strong>毎月自動で完成</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reasons Section -->
+<section id="reasons" class="bg-alt">
+  <div class="container">
+    <h2 class="fade-in-up">RakuFlowが選ばれる3つの理由</h2>
+
+    <div class="reason-item fade-in-up">
+      <div class="reason-content-grid">
+        <div class="reason-text">
+          <div class="reason-number">01</div>
+          <h3>テンプレートではなく、あなた専用の仕組みを作る</h3>
+          <p>既製品のツールを押し付けるのではなく、丁寧なヒアリングを通じてあなたの業務フローを深く理解。その上で、一社一社に最適な自動化ワークフローをゼロから設計・構築します。だからこそ、本当に効果が出る仕組みが作れます。</p>
+        </div>
+        <div class="reason-visual">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;">
+            <circle cx="100" cy="100" r="80" stroke="url(#rg1)" stroke-width="2" opacity="0.5"/>
+            <circle cx="100" cy="100" r="60" stroke="url(#rg1)" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="100" cy="70" r="16" fill="url(#rg1)" opacity="0.4"/>
+            <path d="M70 130 L100 110 L130 130" stroke="url(#rg1)" stroke-width="2" fill="none" opacity="0.6"/>
+            <circle cx="100" cy="70" r="8" fill="url(#rg1)" opacity="0.6"/>
+            <text x="100" y="160" text-anchor="middle" fill="#3B82F6" font-size="11" font-family="Poppins" opacity="0.8">Custom Design</text>
+            <defs><linearGradient id="rg1" x1="0" y1="0" x2="200" y2="200"><stop stop-color="#3B82F6"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="reason-item fade-in-up">
+      <div class="reason-content-grid">
+        <div class="reason-text">
+          <div class="reason-number">02</div>
+          <h3>「作って終わり」ではない。実際に動く仕組みを納品</h3>
+          <p>YouTube Live自動配信、予約管理システム、メール自動送信、LINE連携チャットボット、アンケート自動収集まで、複数のプラットフォームを横断した統合的な自動化を構築・運用してきた実績があります。机上の空論ではなく、実際の現場で稼働し続ける仕組みを提供します。</p>
+        </div>
+        <div class="reason-visual">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;">
+            <rect x="30" y="60" width="40" height="30" rx="6" fill="url(#rg2)" opacity="0.4"/>
+            <rect x="80" y="60" width="40" height="30" rx="6" fill="url(#rg2)" opacity="0.5"/>
+            <rect x="130" y="60" width="40" height="30" rx="6" fill="url(#rg2)" opacity="0.55"/>
+            <line x1="70" y1="75" x2="80" y2="75" stroke="#3B82F6" stroke-width="2" opacity="0.6"/>
+            <line x1="120" y1="75" x2="130" y2="75" stroke="#3B82F6" stroke-width="2" opacity="0.6"/>
+            <rect x="55" y="110" width="90" height="40" rx="8" stroke="url(#rg2)" stroke-width="1.5" fill="url(#rg2)" fill-opacity="0.2"/>
+            <text x="100" y="134" text-anchor="middle" fill="#3B82F6" font-size="11" font-family="Poppins" opacity="0.8">Running 24/7</text>
+            <defs><linearGradient id="rg2" x1="0" y1="0" x2="200" y2="200"><stop stop-color="#3B82F6"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="reason-item fade-in-up">
+      <div class="reason-content-grid">
+        <div class="reason-text">
+          <div class="reason-number">03</div>
+          <h3>専門用語ゼロ。あなたのペースで進めます</h3>
+          <p>「自動化って難しそう」と感じている方こそ、ぜひご相談ください。専門用語を使わず分かりやすくご説明し、一つ一つ確認しながら進めます。導入後の運用サポートにも対応しているので、安心してお任せいただけます。</p>
+        </div>
+        <div class="reason-visual">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;">
+            <circle cx="100" cy="80" r="35" stroke="url(#rg3)" stroke-width="1.5" opacity="0.5"/>
+            <path d="M85 80 L95 90 L115 70" stroke="url(#rg3)" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+            <rect x="50" y="130" width="100" height="8" rx="4" fill="url(#rg3)" opacity="0.3"/>
+            <rect x="50" y="130" width="70" height="8" rx="4" fill="url(#rg3)" opacity="0.55"/>
+            <rect x="50" y="145" width="100" height="8" rx="4" fill="url(#rg3)" opacity="0.3"/>
+            <rect x="50" y="145" width="45" height="8" rx="4" fill="url(#rg3)" opacity="0.5"/>
+            <text x="100" y="175" text-anchor="middle" fill="#3B82F6" font-size="11" font-family="Poppins" opacity="0.8">Step by Step</text>
+            <defs><linearGradient id="rg3" x1="0" y1="0" x2="200" y2="200"><stop stop-color="#3B82F6"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies Section -->
+<section id="case-studies" class="bg-white">
+  <div class="container">
+    <h2 class="fade-in-up">導入事例</h2>
+    <div class="cases-grid">
+      <div class="case-card fade-in-up">
+        <div class="case-band case-band-blue"></div>
+        <div class="case-body">
+          <span class="case-tag case-tag-blue">業務運営の自動化</span>
+          <h3>セミナー運営の完全自動化</h3>
+          <p>毎回手作業で行っていたYouTube Live配信の設定、参加者へのメール送信、アンケート収集をすべて自動化。週2回のセミナー運営にかかる工数を大幅に削減し、スタッフは本来の業務に集中できるようになりました。</p>
+          <ul class="case-tasks">
+            <li>YouTube Live配信枠の自動作成（1ヶ月先まで自動予約）</li>
+            <li>参加者へのリマインドメール自動送信</li>
+            <li>アンケート収集・集計の自動化</li>
+            <li>LINE通知によるエラー監視・運用モニタリング</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-card fade-in-up">
+        <div class="case-band case-band-cyan"></div>
+        <div class="case-body">
+          <span class="case-tag case-tag-cyan">顧客向けサービスの自動化</span>
+          <h3>整骨院・治療院向け LINE予約AIチャットボットの構築</h3>
+          <p>整骨院・治療院様向けに、LINE公式アカウントと連携した予約AIチャットボットを構築。患者様がLINEのトーク画面から24時間いつでも予約・変更・キャンセルができる仕組みを実現しました。受付スタッフの電話対応の負担を大幅に軽減しながら、患者様の利便性も向上。現在、複数の治療院・整骨院様にご導入いただいています。</p>
+          <ul class="case-tasks">
+            <li>LINEチャットボットによる自動予約受付（24時間対応）</li>
+            <li>予約リマインド通知の自動送信</li>
+            <li>予約状況の自動管理・集計</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section-cta fade-in-up">
+      <a href="#final-cta" class="btn btn-primary" aria-label="無料相談に申し込む">無料相談に申し込む</a>
+    </div>
+  </div>
+</section>
+
+<!-- Count Up Section -->
+<section id="count-up" class="bg-alt">
+  <div class="container">
+    <div class="count-grid">
+      <div class="count-item fade-in-up">
+        <div class="count-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="count-number-wrapper">
+          <span class="count-number" data-target="40">0</span><span class="count-suffix">h+</span>
+        </div>
+        <p class="count-label">月間で削減できる作業時間</p>
+        <div class="count-sub-items">
+          <span class="count-sub-item">請求書発行業務</span>
+          <span class="count-sub-item">データ入力</span>
+          <span class="count-sub-item">日頃のルーチン作業</span>
+          <span class="count-sub-item">見積書・納品書作成</span>
+          <span class="count-sub-item">メール対応・返信</span>
+          <span class="count-sub-item">スケジュール調整</span>
+        </div>
+      </div>
+      <div class="count-item fade-in-up">
+        <div class="count-icon">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="count-number-wrapper">
+          <span class="count-number" data-target="100">0</span><span class="count-suffix">+</span>
+        </div>
+        <p class="count-label">連携可能なツール・サービス</p>
+        <div class="count-sub-items">
+          <span class="count-sub-item">Google スプレッドシート</span>
+          <span class="count-sub-item">Google Drive</span>
+          <span class="count-sub-item">Google Calendar</span>
+          <span class="count-sub-item">LINE</span>
+          <span class="count-sub-item">メールサービス</span>
+          <span class="count-sub-item">Chatwork</span>
+          <span class="count-sub-item">TimeRex</span>
+          <span class="count-sub-item">画像生成AI</span>
+          <span class="count-sub-item">ChatGPT</span>
+          <span class="count-sub-item">Claude</span>
+          <span class="count-sub-item">Gemini</span>
+        </div>
+      </div>
+      <div class="count-item fade-in-up">
+        <div class="count-icon">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="count-number-wrapper">
+          <span class="count-number" data-target="3">0</span><span class="count-suffix">秒</span>
+        </div>
+        <p class="count-label">手作業15分の業務を自動処理</p>
+        <div class="count-sub-items">
+          <span class="count-sub-item">メール送信・転送</span>
+          <span class="count-sub-item">データ転記</span>
+          <span class="count-sub-item">予約確認・通知</span>
+          <span class="count-sub-item">ファイル整理・保存</span>
+          <span class="count-sub-item">レポート自動生成</span>
+          <span class="count-sub-item">SNS投稿・配信</span>
+        </div>
+      </div>
+      <div class="count-item fade-in-up">
+        <div class="count-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="count-number-wrapper">
+          <span class="count-number" data-target="24" data-is-compound="true">0</span>
+          <span class="count-divider">/</span>
+          <span class="count-number" data-target="365" data-is-compound-b="true">0</span>
+        </div>
+        <p class="count-label">自動化は休まず稼働</p>
+        <div class="count-sub-items">
+          <span class="count-sub-item">予約受付の自動応答</span>
+          <span class="count-sub-item">定期レポートの自動生成</span>
+          <span class="count-sub-item">リマインド通知の自動送信</span>
+          <span class="count-sub-item">問い合わせの自動返信</span>
+          <span class="count-sub-item">エラー検知・復旧通知</span>
+          <span class="count-sub-item">在庫・売上アラート</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Flow Section -->
+<section id="service-flow" class="bg-white">
+  <div class="container">
+    <h2 class="fade-in-up">無料相談から導入まで、4つのステップ</h2>
+    <div class="flow-grid">
+      <div class="flow-line"></div>
+      <div class="flow-step fade-in-up">
+        <div class="flow-number">1</div>
+        <div class="flow-content">
+          <h3>無料相談</h3>
+          <p>現在の業務の課題やお悩みをお聞かせください。オンラインで30分程度、お気軽にご相談いただけます。</p>
+          <p class="flow-note">自動化で何ができるか分からない、という段階でもOKです</p>
+        </div>
+      </div>
+      <div class="flow-step fade-in-up">
+        <div class="flow-number">2</div>
+        <div class="flow-content">
+          <h3>ヒアリング・ご提案</h3>
+          <p>業務フローを詳しくお伺いし、最適な自動化プランをご提案します。お見積もりもこの段階でお出しします。</p>
+          <p class="flow-note">ご納得いただけた場合のみ、次のステップに進みます</p>
+        </div>
+      </div>
+      <div class="flow-step fade-in-up">
+        <div class="flow-number">3</div>
+        <div class="flow-content">
+          <h3>構築・テスト運用</h3>
+          <p>ワークフローを構築し、テスト環境で動作を確認。お客様のフィードバックを反映して調整します。</p>
+          <p class="flow-note">構築中も進捗を随時ご報告します</p>
+        </div>
+      </div>
+      <div class="flow-step fade-in-up">
+        <div class="flow-number">4</div>
+        <div class="flow-content">
+          <h3>納品・運用開始</h3>
+          <p>完成したワークフローを納品し、運用をスタート。操作方法のレクチャーも行います。</p>
+          <p class="flow-note">導入後のサポートもご安心ください</p>
+        </div>
+      </div>
+    </div>
+    <div class="section-cta fade-in-up">
+      <a href="#final-cta" class="btn btn-primary" aria-label="まずは無料相談から始める">まずは無料相談から始める</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="bg-alt">
+  <div class="container">
+    <h2 class="fade-in-up">よくある質問</h2>
+    <div class="faq-list">
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>ITに詳しくなくても大丈夫ですか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>もちろん大丈夫です。専門知識は一切不要です。分かりやすい言葉で丁寧にヒアリングし、一つ一つ確認しながら進めますのでご安心ください。</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>費用はどのくらいですか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>業務内容や自動化の範囲によって異なります。まずは無料相談でお気軽にご相談ください。ご予算に応じたプランをご提案いたします。</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>どのくらいの期間で導入できますか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>内容にもよりますが、シンプルなワークフローは1〜2週間、複数ツールの連携を含む複雑なものでも1〜2ヶ月程度が目安です。</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>導入後のサポートはありますか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>はい。運用開始後の調整や、新たな自動化のご相談にも対応いたします。「作って終わり」ではなく、継続的にサポートします。</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>どんなツールと連携できますか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Gmail、Googleスプレッドシート、LINE、YouTube、Slack、各種CRM、予約管理システムなど、主要なサービスの大半と連携可能です。お使いのツールについてはお気軽にご相談ください。</p>
+        </div>
+      </div>
+      <div class="faq-item fade-in-up">
+        <button class="faq-question" aria-expanded="false">
+          <span>自動化で何ができるか分からないのですが、相談できますか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>もちろんです。「こんなことで困っている」というお話をお聞かせいただければ、自動化できる部分をこちらからご提案します。漠然としたお悩みでも大歓迎です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA Section -->
+<section id="final-cta">
+  <div class="container">
+    <p class="cta-eyebrow fade-in-up">＼ あなたの業務を変える第一歩 ／</p>
+    <h2 class="fade-in-up">まずは30分の無料相談から、<br>あなたの業務を楽にする第一歩を。</h2>
+    <p class="fade-in-up">「自動化で何ができるか分からない」という段階でも大歓迎です。<br>あなたの業務のお悩みをお聞かせください。<br>最適な自動化のかたちを、一緒に考えましょう。</p>
+    <div class="fade-in-up">
+      <a href="#" class="btn btn-white" aria-label="無料相談に申し込む">無料相談に申し込む →</a>
+    </div>
+    <p class="cta-note fade-in-up">※ 無理な営業は一切いたしません。お気軽にどうぞ。</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================
+     Footer
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">RakuFlow</div>
+
+    <div class="footer-links">
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">特定商取引法に基づく表記</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 RakuFlow. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     JavaScript
+     ============================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ============================================
+     Utility Functions
+     ============================================ */
+  function easeOutQuad(t) { return t * (2 - t); }
+  function easeInQuad(t) { return t * t; }
+  function isMobile() { return window.innerWidth < 768; }
+  function throttle(fn, wait) {
+    let last = 0;
+    return function() {
+      const now = Date.now();
+      if (now - last >= wait) { last = now; fn.apply(this, arguments); }
+    };
+  }
+
+  /* ============================================
+     Header Scroll Effect
+     ============================================ */
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', throttle(function() {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }, 100));
+
+  /* ============================================
+     Scroll Fade-In (Intersection Observer)
+     ============================================ */
+  const fadeObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in-up').forEach(function(el) {
+    fadeObserver.observe(el);
+  });
+
+  /* ============================================
+     Smooth Scroll
+     ============================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ============================================
+     FAQ Accordion
+     ============================================ */
+  document.querySelectorAll('.faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.parentElement;
+      var isOpen = item.classList.contains('open');
+      var expanded = !isOpen;
+      document.querySelectorAll('.faq-item.open').forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ============================================
+     Animation 1: Hero Particle Flow (Canvas API)
+     ============================================ */
+  var ParticleSystem = (function() {
+    function PS(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.particles = [];
+      this.connectionDist = 180;
+      this.running = true;
+      this.mouse = { x: -1000, y: -1000, active: false };
+      this.mouseRadius = 120;
+      this.resize();
+      this.initParticles();
+      var self = this;
+      window.addEventListener('resize', throttle(function() { self.resize(); }, 250));
+      var heroEl = this.canvas.parentElement;
+      heroEl.addEventListener('mousemove', function(e) {
+        var rect = self.canvas.getBoundingClientRect();
+        self.mouse.x = e.clientX - rect.left;
+        self.mouse.y = e.clientY - rect.top;
+        self.mouse.active = true;
+      });
+      heroEl.addEventListener('mouseleave', function() {
+        self.mouse.active = false;
+      });
+      this.animate();
+    }
+
+    PS.prototype.resize = function() {
+      var rect = this.canvas.parentElement.getBoundingClientRect();
+      this.canvas.width = rect.width;
+      this.canvas.height = rect.height;
+      this.targetCount = isMobile() ? 25 : 55;
+      while (this.particles.length < this.targetCount) {
+        this.particles.push(this.createParticle());
+      }
+      while (this.particles.length > this.targetCount) {
+        this.particles.pop();
+      }
+    };
+
+    PS.prototype.createParticle = function() {
+      var colorType = Math.random();
+      var rgb = colorType > 0.5 ? '59, 130, 246' : '6, 182, 212';
+      return {
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 2.5 + 1.5,
+        opacity: Math.random() * 0.25 + 0.15,
+        rgb: rgb
+      };
+    };
+
+    PS.prototype.initParticles = function() {
+      for (var i = 0; i < this.targetCount; i++) {
+        this.particles.push(this.createParticle());
+      }
+    };
+
+    PS.prototype.update = function() {
+      var w = this.canvas.width, h = this.canvas.height;
+      for (var i = 0; i < this.particles.length; i++) {
+        var p = this.particles[i];
+        if (this.mouse.active) {
+          var mdx = p.x - this.mouse.x;
+          var mdy = p.y - this.mouse.y;
+          var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < this.mouseRadius && mDist > 0) {
+            var force = (1 - mDist / this.mouseRadius) * 0.8;
+            p.vx += (mdx / mDist) * force;
+            p.vy += (mdy / mDist) * force;
+          }
+        }
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+        var speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+        if (speed < 0.15) {
+          p.vx += (Math.random() - 0.5) * 0.05;
+          p.vy += (Math.random() - 0.5) * 0.05;
+        }
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+      }
+    };
+
+    PS.prototype.draw = function() {
+      var ctx = this.ctx;
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      var particles = this.particles;
+      var dist = this.connectionDist;
+
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < dist) {
+            var lineOpacity = 0.25 * (1 - d / dist);
+            ctx.strokeStyle = 'rgba(59, 130, 246, ' + lineOpacity + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      if (this.mouse.active) {
+        for (var m = 0; m < particles.length; m++) {
+          var mdx = particles[m].x - this.mouse.x;
+          var mdy = particles[m].y - this.mouse.y;
+          var md = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (md < this.mouseRadius) {
+            var mouseLineOpacity = 0.3 * (1 - md / this.mouseRadius);
+            ctx.strokeStyle = 'rgba(99, 102, 241, ' + mouseLineOpacity + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(this.mouse.x, this.mouse.y);
+            ctx.lineTo(particles[m].x, particles[m].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (var k = 0; k < particles.length; k++) {
+        var p = particles[k];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + p.rgb + ', ' + p.opacity + ')';
+        ctx.fill();
+      }
+    };
+
+    PS.prototype.animate = function() {
+      if (!this.running) return;
+      this.update();
+      this.draw();
+      var self = this;
+      requestAnimationFrame(function() { self.animate(); });
+    };
+
+    return PS;
+  })();
+
+  var particleCanvas = document.getElementById('particle-canvas');
+  if (particleCanvas) {
+    new ParticleSystem(particleCanvas);
+  }
+
+  /* ============================================
+     Hero Rotating Pain Text
+     ============================================ */
+  (function() {
+    var heroMessages = [
+      { text: 'また同じメールを手打ち…', type: 'pain' },
+      { text: '予約確認で今日も電話に追われる', type: 'pain' },
+      { text: '月末のデータ集計、また残業か…', type: 'pain' },
+      { text: '人を雇いたいけど、人件費が合わない…', type: 'pain' },
+      { text: '手作業のミスで、またクレームが…', type: 'pain' },
+      { text: '自動化したいけど、何から始めれば…', type: 'pain' },
+      { text: 'RakuFlowが、全部やります。', type: 'solution' }
+    ];
+    var container = document.getElementById('hero-rotating');
+    if (!container) return;
+    var currentIndex = 0;
+    var textEl = container.querySelector('.hero-pain-text');
+
+    function showNext() {
+      textEl.classList.remove('active');
+      setTimeout(function() {
+        currentIndex = (currentIndex + 1) % heroMessages.length;
+        var msg = heroMessages[currentIndex];
+        textEl.textContent = msg.text;
+        if (msg.type === 'solution') {
+          textEl.classList.add('solution');
+        } else {
+          textEl.classList.remove('solution');
+        }
+        textEl.classList.add('active');
+        var displayTime = msg.type === 'solution' ? 3500 : 2500;
+        setTimeout(showNext, displayTime);
+      }, 500);
+    }
+
+    setTimeout(showNext, 2500);
+  })();
+
+  /* ============================================
+     Animation 2: Before/After Demo (Loop)
+     ============================================ */
+  var baVisible = false;
+  var baRunning = false;
+  var baTimeouts = [];
+  var baRafIds = [];
+
+  function resetBeforeAfterDemo() {
+    baTimeouts.forEach(clearTimeout);
+    baTimeouts = [];
+    baRafIds.forEach(cancelAnimationFrame);
+    baRafIds = [];
+
+    var beforeScreen = document.getElementById('before-screen');
+    var afterScreen = document.getElementById('after-screen');
+    var beforeTimer = document.getElementById('before-timer');
+    var afterTimer = document.getElementById('after-timer');
+    var beforeBadge = document.getElementById('before-badge');
+    var afterBadge = document.getElementById('after-badge');
+    var baCta = document.getElementById('ba-cta');
+    var runBtn = document.getElementById('wf-run-btn');
+    var nodes = document.querySelectorAll('.wf-node');
+    var arrows = document.querySelectorAll('.wf-arrow');
+
+    if (beforeScreen) beforeScreen.innerHTML = '';
+    if (beforeTimer) beforeTimer.textContent = '0:00';
+    if (afterTimer) afterTimer.textContent = '0:00';
+    if (beforeBadge) beforeBadge.classList.remove('show');
+    if (afterBadge) afterBadge.classList.remove('show');
+    if (baCta) baCta.classList.remove('show');
+    if (runBtn) { runBtn.style.display = 'block'; runBtn.classList.remove('clicked'); }
+    nodes.forEach(function(n) { n.classList.remove('active'); var c = n.querySelector('.wf-check'); if(c) c.classList.remove('show'); });
+    arrows.forEach(function(a) { a.classList.remove('active'); });
+  }
+
+  function runBeforeAfterCycle() {
+    if (!baVisible) { baRunning = false; return; }
+    baRunning = true;
+    resetBeforeAfterDemo();
+
+    var beforeScreen = document.getElementById('before-screen');
+    var beforeTimer = document.getElementById('before-timer');
+    var afterTimer = document.getElementById('after-timer');
+    var beforeBadge = document.getElementById('before-badge');
+    var afterBadge = document.getElementById('after-badge');
+    var baCta = document.getElementById('ba-cta');
+    var runBtn = document.getElementById('wf-run-btn');
+    var nodes = document.querySelectorAll('.wf-node');
+    var arrows = document.querySelectorAll('.wf-arrow');
+
+    /* --- Before Side Animation --- */
+    var beforeDuration = 10000;
+    var beforeStart = performance.now();
+
+    // Phase 1: Email copy-paste (0-3s)
+    var emailHtml = '<div style="margin-bottom:8px;font-weight:600;color:#374151;">📧 メール送信</div>';
+    emailHtml += '<div class="email-line" id="el1" style="font-size:0.7rem;"><span style="color:#9CA3AF;">宛先:</span> <span class="highlight" id="hl1">tanaka@example.com</span></div>';
+    emailHtml += '<div class="email-line" id="el2" style="font-size:0.7rem;"><span style="color:#9CA3AF;">宛先:</span> <span class="highlight" id="hl2">suzuki@example.com</span></div>';
+    emailHtml += '<div class="email-line" id="el3" style="font-size:0.7rem;"><span style="color:#9CA3AF;">宛先:</span> <span class="highlight" id="hl3">yamada@example.com</span></div>';
+    emailHtml += '<div style="margin-top:12px;padding:8px;background:#F3F4F6;border-radius:4px;font-size:0.65rem;color:#9CA3AF;">件名: セミナーのご案内<br>本文: いつもお世話になっております...</div>';
+    beforeScreen.innerHTML = emailHtml;
+
+    baTimeouts.push(setTimeout(function() { var el = document.getElementById('el1'); if(el) el.classList.add('show'); }, 200));
+    baTimeouts.push(setTimeout(function() { var hl = document.getElementById('hl1'); if(hl) hl.classList.add('active'); }, 400));
+    baTimeouts.push(setTimeout(function() { var hl = document.getElementById('hl1'); if(hl) hl.classList.remove('active'); }, 800));
+    baTimeouts.push(setTimeout(function() { var el = document.getElementById('el2'); if(el) el.classList.add('show'); }, 1000));
+    baTimeouts.push(setTimeout(function() { var hl = document.getElementById('hl2'); if(hl) hl.classList.add('active'); }, 1200));
+    baTimeouts.push(setTimeout(function() { var hl = document.getElementById('hl2'); if(hl) hl.classList.remove('active'); }, 1700));
+    baTimeouts.push(setTimeout(function() { var el = document.getElementById('el3'); if(el) el.classList.add('show'); }, 2000));
+
+    // Phase 2: Spreadsheet (2500-5000ms)
+    baTimeouts.push(setTimeout(function() {
+      beforeScreen.innerHTML = '<div style="margin-bottom:8px;font-weight:600;color:#374151;">📊 データ入力</div>';
+      var table = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;font-size:0.65rem;">';
+      table += '<div class="spreadsheet-cell" style="background:#E5E7EB;font-weight:600;">名前</div>';
+      table += '<div class="spreadsheet-cell" style="background:#E5E7EB;font-weight:600;">メール</div>';
+      table += '<div class="spreadsheet-cell" style="background:#E5E7EB;font-weight:600;">日時</div>';
+      table += '<div class="spreadsheet-cell" id="sc1"></div>';
+      table += '<div class="spreadsheet-cell" id="sc2"></div>';
+      table += '<div class="spreadsheet-cell" id="sc3"></div>';
+      table += '<div class="spreadsheet-cell" id="sc4"></div>';
+      table += '<div class="spreadsheet-cell" id="sc5"></div>';
+      table += '<div class="spreadsheet-cell" id="sc6"></div>';
+      table += '</div>';
+      beforeScreen.innerHTML += table;
+
+      var cells = [
+        {id:'sc1', text:'田中太郎', delay:150},
+        {id:'sc2', text:'tanaka@...', delay:450},
+        {id:'sc3', text:'3/5 14:00', delay:750},
+        {id:'sc4', text:'鈴木花子', delay:1050},
+        {id:'sc5', text:'suzuki@...', delay:1350},
+        {id:'sc6', text:'3/6 10:00', delay:1650}
+      ];
+      cells.forEach(function(c) {
+        baTimeouts.push(setTimeout(function() {
+          var el = document.getElementById(c.id);
+          if (el) typeText(el, c.text, 45);
+        }, c.delay));
+      });
+    }, 2500));
+
+    // Phase 3: Booking confirmation with manual checking animation (5000-7500ms)
+    baTimeouts.push(setTimeout(function() {
+      var resHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">📅 予約確認</div>';
+      var reservations = [
+        { name: '田中太郎様', time: '3/5(水) 14:00〜', id: 'res1' },
+        { name: '鈴木花子様', time: '3/6(木) 10:00〜', id: 'res2' },
+        { name: '山田次郎様', time: '3/7(金) 15:00〜', id: 'res3' }
+      ];
+      reservations.forEach(function(r) {
+        resHtml += '<div id="' + r.id + '" style="padding:6px 8px;margin-bottom:4px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:4px;font-size:0.65rem;display:flex;align-items:center;justify-content:space-between;opacity:0;transition:opacity 0.3s;">';
+        resHtml += '<div><div style="color:#374151;font-weight:500;">' + r.name + '</div>';
+        resHtml += '<div style="color:#9CA3AF;font-size:0.6rem;">' + r.time + '</div></div>';
+        resHtml += '<div style="display:flex;align-items:center;gap:4px;">';
+        resHtml += '<span id="' + r.id + '-status" style="color:#F97316;font-weight:500;font-size:0.6rem;">確認待ち</span>';
+        resHtml += '<button id="' + r.id + '-btn" style="background:#3B82F6;color:white;border:none;border-radius:3px;padding:2px 6px;font-size:0.55rem;cursor:pointer;opacity:0.5;">確認</button>';
+        resHtml += '</div></div>';
+      });
+      beforeScreen.innerHTML = resHtml;
+
+      reservations.forEach(function(r, i) {
+        // Fade in the card
+        baTimeouts.push(setTimeout(function() {
+          var card = document.getElementById(r.id);
+          if (card) card.style.opacity = '1';
+        }, i * 700));
+        // Highlight confirm button
+        baTimeouts.push(setTimeout(function() {
+          var btn = document.getElementById(r.id + '-btn');
+          if (btn) { btn.style.opacity = '1'; btn.style.background = '#2563EB'; btn.style.transform = 'scale(1.1)'; }
+        }, i * 700 + 300));
+        // Click: change status to confirmed
+        baTimeouts.push(setTimeout(function() {
+          var status = document.getElementById(r.id + '-status');
+          var btn = document.getElementById(r.id + '-btn');
+          if (status) { status.textContent = '確認済み'; status.style.color = '#16A34A'; }
+          if (btn) { btn.style.background = '#D1D5DB'; btn.textContent = '済'; btn.style.transform = 'scale(1)'; }
+        }, i * 700 + 500));
+      });
+    }, 5000));
+
+    // Phase 4: Invoice creation (7500-10000ms)
+    baTimeouts.push(setTimeout(function() {
+      var invoiceHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">📄 請求書発行</div>';
+      invoiceHtml += '<div style="background:white;border:1px solid #D1D5DB;border-radius:4px;padding:8px;font-size:0.6rem;">';
+      invoiceHtml += '<div style="text-align:center;font-weight:600;color:#374151;margin-bottom:6px;font-size:0.7rem;border-bottom:1px solid #E5E7EB;padding-bottom:4px;">請 求 書</div>';
+      invoiceHtml += '<div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;align-items:center;">';
+      invoiceHtml += '<span style="color:#9CA3AF;font-size:0.6rem;">宛名:</span><span id="inv-name" style="border-bottom:1px dashed #D1D5DB;min-height:14px;color:#374151;"></span>';
+      invoiceHtml += '<span style="color:#9CA3AF;font-size:0.6rem;">日付:</span><span id="inv-date" style="border-bottom:1px dashed #D1D5DB;min-height:14px;color:#374151;"></span>';
+      invoiceHtml += '<span style="color:#9CA3AF;font-size:0.6rem;">品目:</span><span id="inv-item" style="border-bottom:1px dashed #D1D5DB;min-height:14px;color:#374151;"></span>';
+      invoiceHtml += '<span style="color:#9CA3AF;font-size:0.6rem;">金額:</span><span id="inv-amount" style="border-bottom:1px dashed #D1D5DB;min-height:14px;color:#374151;font-weight:600;"></span>';
+      invoiceHtml += '<span style="color:#9CA3AF;font-size:0.6rem;">備考:</span><span id="inv-note" style="border-bottom:1px dashed #D1D5DB;min-height:14px;color:#374151;"></span>';
+      invoiceHtml += '</div></div>';
+      beforeScreen.innerHTML = invoiceHtml;
+
+      var fields = [
+        { id: 'inv-name',   text: '株式会社サンプル',     delay: 200 },
+        { id: 'inv-date',   text: '2026年3月5日',        delay: 700 },
+        { id: 'inv-item',   text: 'コンサルティング費用',  delay: 1200 },
+        { id: 'inv-amount', text: '¥150,000',            delay: 1700 },
+        { id: 'inv-note',   text: '3月分',               delay: 2100 }
+      ];
+      fields.forEach(function(f) {
+        baTimeouts.push(setTimeout(function() {
+          var el = document.getElementById(f.id);
+          if (el) typeText(el, f.text, 40);
+        }, f.delay));
+      });
+    }, 7500));
+
+    // Before timer
+    var baTimerRunning = true;
+    function updateBeforeTimer() {
+      var rafId = requestAnimationFrame(function tick() {
+        if (!baTimerRunning) return;
+        var elapsed = performance.now() - beforeStart;
+        var progress = Math.min(elapsed / beforeDuration, 1);
+        var mappedTime = Math.round(easeInQuad(progress) * 15);
+        var mins = Math.floor(mappedTime);
+        beforeTimer.textContent = mins + ':00';
+        if (progress < 1) {
+          var id = requestAnimationFrame(tick);
+          baRafIds.push(id);
+        } else {
+          beforeTimer.textContent = '15:00';
+          beforeBadge.classList.add('show');
+          checkBothDone();
+        }
+      });
+      baRafIds.push(rafId);
+    }
+    updateBeforeTimer();
+
+    /* --- After Side Animation --- */
+    runBtn.classList.add('clicked');
+    baTimeouts.push(setTimeout(function() { runBtn.style.display = 'none'; }, 300));
+
+    var nodeDelay = 350;
+    nodes.forEach(function(node, i) {
+      baTimeouts.push(setTimeout(function() {
+        node.classList.add('active');
+        if (i > 0) arrows[i-1].classList.add('active');
+        // Show check on every node
+        baTimeouts.push(setTimeout(function() {
+          var check = node.querySelector('.wf-check');
+          if (check) check.classList.add('show');
+        }, 200));
+      }, i * nodeDelay));
+    });
+
+    // After timer
+    var afterStartTime = performance.now();
+    var afterDuration = nodes.length * nodeDelay + 400;
+    var afterTimerRunning = true;
+    var afterRafId = requestAnimationFrame(function tickAfter() {
+      if (!afterTimerRunning) return;
+      var elapsed = performance.now() - afterStartTime;
+      var progress = Math.min(elapsed / afterDuration, 1);
+      var secs = Math.round(progress * 3);
+      afterTimer.textContent = '0:0' + secs;
+      if (progress < 1) {
+        var id = requestAnimationFrame(tickAfter);
+        baRafIds.push(id);
+      } else {
+        afterTimer.textContent = '0:03';
+        afterBadge.classList.add('show');
+        checkBothDone();
+      }
+    });
+    baRafIds.push(afterRafId);
+
+    function checkBothDone() {
+      if (beforeBadge.classList.contains('show') && afterBadge.classList.contains('show')) {
+        baTimeouts.push(setTimeout(function() {
+          baCta.classList.add('show');
+          // Wait 4 seconds, then restart the cycle
+          baTimeouts.push(setTimeout(function() {
+            baTimerRunning = false;
+            afterTimerRunning = false;
+            if (baVisible) {
+              runBeforeAfterCycle();
+            } else {
+              baRunning = false;
+            }
+          }, 4000));
+        }, 600));
+      }
+    }
+  }
+
+  function typeText(element, text, speed) {
+    var i = 0;
+    function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  }
+
+  // Before/After observer (persistent, no disconnect)
+  var baSection = document.getElementById('before-after');
+  if (baSection) {
+    var baObserver = new IntersectionObserver(function(entries) {
+      baVisible = entries[0].isIntersecting;
+      if (baVisible && !baRunning) {
+        runBeforeAfterCycle();
+      }
+    }, { threshold: 0.25 });
+    baObserver.observe(baSection);
+  }
+
+  /* ============================================
+     Animation 3: Smartphone Notification Demo (Loop)
+     ============================================ */
+  var notifData = [
+    { icon: 'L', color: '#06C755', title: '新規予約が入りました', body: '山田太郎様 / 3月5日(水) 14:00〜', time: '9:15 AM' },
+    { icon: '✉', color: '#3B82F6', title: 'セミナー申込完了メール送信済み', body: '本日の申込: 3件 / 累計: 28件', time: '10:30 AM' },
+    { icon: 'L', color: '#06C755', title: 'リマインドメール配信完了', body: '送信件数: 12件 / エラー: 0件', time: '5:00 PM' },
+    { icon: '📊', color: '#F97316', title: '月次レポートが完成しました', body: '売上前月比: +12% ↑', time: '6:00 PM' }
+  ];
+  var phoneTimes = ['9:41', '14:22', '3:15', '7:30'];
+  var phoneDates = ['3月5日 水曜日', '3月12日 水曜日', '4月1日 火曜日', '5月20日 火曜日'];
+  var phoneCycleIndex = 0;
+  var phoneVisible = false;
+  var phoneRunning = false;
+  var phoneTimeouts = [];
+
+  function resetPhoneDemo() {
+    phoneTimeouts.forEach(clearTimeout);
+    phoneTimeouts = [];
+    var container = document.getElementById('notifications');
+    var overlay = document.getElementById('phone-overlay');
+    if (container) container.innerHTML = '';
+    if (overlay) overlay.classList.remove('show');
+    var leftItems = document.querySelectorAll('#phone-text-left .phone-side-item');
+    var rightItems = document.querySelectorAll('#phone-text-right .phone-side-item');
+    leftItems.forEach(function(item) { item.classList.remove('visible'); });
+    rightItems.forEach(function(item) { item.classList.remove('visible'); });
+  }
+
+  function runPhoneCycle() {
+    if (!phoneVisible) { phoneRunning = false; return; }
+    phoneRunning = true;
+    resetPhoneDemo();
+
+    var container = document.getElementById('notifications');
+    var overlay = document.getElementById('phone-overlay');
+    var lockTime = document.querySelector('.lock-time');
+    var lockDate = document.querySelector('.lock-date');
+
+    // Update lock screen time for each cycle
+    if (lockTime) lockTime.textContent = phoneTimes[phoneCycleIndex % phoneTimes.length];
+    if (lockDate) lockDate.textContent = phoneDates[phoneCycleIndex % phoneDates.length];
+    phoneCycleIndex++;
+
+    // Animate side text items
+    var leftItems = document.querySelectorAll('#phone-text-left .phone-side-item');
+    var rightItems = document.querySelectorAll('#phone-text-right .phone-side-item');
+    var sideItems = [];
+    if (leftItems[0]) sideItems.push(leftItems[0]);
+    if (rightItems[0]) sideItems.push(rightItems[0]);
+    if (leftItems[1]) sideItems.push(leftItems[1]);
+    if (rightItems[1]) sideItems.push(rightItems[1]);
+    sideItems.forEach(function(item, i) {
+      phoneTimeouts.push(setTimeout(function() { item.classList.add('visible'); }, i * 1700 + 400));
+    });
+
+    // Slide in notifications
+    notifData.forEach(function(data, index) {
+      phoneTimeouts.push(setTimeout(function() {
+        var card = document.createElement('div');
+        card.className = 'notif-card';
+
+        var iconEl = document.createElement('div');
+        iconEl.className = 'notif-icon';
+        iconEl.style.background = data.color;
+        iconEl.textContent = data.icon;
+
+        var bodyEl = document.createElement('div');
+        bodyEl.className = 'notif-body';
+
+        var titleEl = document.createElement('div');
+        titleEl.className = 'notif-title';
+        titleEl.textContent = data.title;
+
+        var textEl = document.createElement('div');
+        textEl.className = 'notif-text';
+        textEl.textContent = data.body;
+
+        bodyEl.appendChild(titleEl);
+        bodyEl.appendChild(textEl);
+
+        var timeEl = document.createElement('div');
+        timeEl.className = 'notif-time';
+        timeEl.textContent = data.time;
+
+        card.appendChild(iconEl);
+        card.appendChild(bodyEl);
+        card.appendChild(timeEl);
+
+        container.appendChild(card);
+
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            card.classList.add('slide-in');
+          });
+        });
+
+        // Show overlay after last notification
+        if (index === notifData.length - 1) {
+          phoneTimeouts.push(setTimeout(function() {
+            overlay.classList.add('show');
+
+            // After 3s pause, slide out notifications and restart
+            phoneTimeouts.push(setTimeout(function() {
+              var cards = container.querySelectorAll('.notif-card');
+              cards.forEach(function(c, ci) {
+                phoneTimeouts.push(setTimeout(function() {
+                  c.classList.add('slide-out');
+                }, ci * 200));
+              });
+
+              // Wait for slide-out to finish, then restart cycle
+              phoneTimeouts.push(setTimeout(function() {
+                if (phoneVisible) {
+                  runPhoneCycle();
+                } else {
+                  phoneRunning = false;
+                }
+              }, cards.length * 200 + 600));
+            }, 3000));
+          }, 1500));
+        }
+      }, index * 1700));
+    });
+  }
+
+  var phoneSection = document.getElementById('smartphone-demo');
+  if (phoneSection) {
+    var phoneObserver = new IntersectionObserver(function(entries) {
+      phoneVisible = entries[0].isIntersecting;
+      if (phoneVisible && !phoneRunning) {
+        runPhoneCycle();
+      }
+    }, { threshold: 0.3 });
+    phoneObserver.observe(phoneSection);
+  }
+
+  /* ============================================
+     Animation 4: Count-Up Numbers
+     ============================================ */
+  var countStarted = false;
+  function startCountUp() {
+    if (countStarted) return;
+    countStarted = true;
+
+    var items = document.querySelectorAll('.count-item');
+    items.forEach(function(item) {
+      var numbers = item.querySelectorAll('.count-number');
+      var animationsRemaining = numbers.length;
+
+      numbers.forEach(function(numEl) {
+        var target = parseInt(numEl.getAttribute('data-target'), 10);
+        var duration = target <= 3 ? 1000 : (target <= 40 ? 2000 : (target <= 100 ? 2000 : 2000));
+        animateCount(numEl, target, duration, function() {
+          animationsRemaining--;
+          if (animationsRemaining === 0) {
+            item.classList.add('completed');
+          }
+        });
+      });
+    });
+  }
+
+  function animateCount(element, target, duration, onComplete) {
+    var start = performance.now();
+    function tick(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = easeOutQuad(progress);
+      element.textContent = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        element.textContent = target;
+        if (onComplete) onComplete();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  var countSection = document.getElementById('count-up');
+  if (countSection) {
+    var countObserver = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        startCountUp();
+        countObserver.disconnect();
+      }
+    }, { threshold: 0.4 });
+    countObserver.observe(countSection);
+  }
+
+})();
+</script>
+</body>
+</html>
