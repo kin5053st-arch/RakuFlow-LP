@@ -66,6 +66,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 4px;
 }
 a { text-decoration: none; color: inherit; }
+.pc-none { display: none; }
 ul, ol { list-style: none; }
 button { border: none; background: none; cursor: pointer; font-family: inherit; }
 
@@ -319,7 +320,7 @@ section { padding: var(--section-padding) 0; }
 }
 .hero-content .subtitle {
   font-size: 1.1rem;
-  color: var(--color-text-sub);
+  color: #374151;
   margin-bottom: 40px;
   line-height: 1.8;
 }
@@ -346,10 +347,11 @@ section { padding: var(--section-padding) 0; }
 .hero-pain-text.active {
   opacity: 1;
   transform: translateY(0);
-  background: rgba(59, 130, 246, 0.08);
-  padding: 8px 20px;
-  border-radius: 8px;
-  border-left: 3px solid var(--color-blue);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(6, 182, 212, 0.06));
+  padding: 10px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.08), inset 0 0 20px rgba(59, 130, 246, 0.03);
 }
 .hero-pain-text.solution {
   font-size: 1.35rem;
@@ -358,6 +360,8 @@ section { padding: var(--section-padding) 0; }
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 .hero-cta { margin-bottom: 16px; }
 .scroll-indicator {
@@ -1281,6 +1285,7 @@ section { padding: var(--section-padding) 0; }
    ============================================ */
 @media (max-width: 767px) {
   .sp-none { display: none; }
+  .pc-none { display: inline; }
 
   .hero-content h1 {
     font-size: 1.75rem;
@@ -1308,6 +1313,20 @@ section { padding: var(--section-padding) 0; }
   }
   #final-cta p {
     font-size: 0.95rem;
+  }
+
+  /* カウント数字: モバイル表示修正 */
+  .count-number {
+    font-size: 2.25rem;
+  }
+  .count-divider {
+    font-size: 1.5rem;
+  }
+  .count-suffix {
+    font-size: 1.15rem;
+  }
+  .count-grid {
+    gap: 24px 16px;
   }
 
   /* ワークフローノード: 見切れ防止 */
@@ -1352,6 +1371,18 @@ section { padding: var(--section-padding) 0; }
   }
   .workflow-container {
     gap: 1px;
+  }
+  .count-number {
+    font-size: 1.85rem;
+  }
+  .count-divider {
+    font-size: 1.25rem;
+  }
+  .count-suffix {
+    font-size: 1rem;
+  }
+  .count-grid {
+    gap: 20px 12px;
   }
 }
 
@@ -1902,7 +1933,7 @@ section { padding: var(--section-padding) 0; }
 <!-- Service Flow Section -->
 <section id="service-flow" class="bg-white">
   <div class="container">
-    <h2 class="fade-in-up">無料相談から導入まで、4つのステップ</h2>
+    <h2 class="fade-in-up">無料相談から導入まで、<br class="pc-none">4つのステップ</h2>
     <div class="flow-grid">
       <div class="flow-line"></div>
       <div class="flow-step fade-in-up">
