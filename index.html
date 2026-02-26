@@ -55,6 +55,9 @@ body {
   line-height: 1.8;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  word-break: auto-phrase;
+  overflow-wrap: anywhere;
+  line-break: strict;
 }
 img { max-width: 100%; height: auto; display: block; }
 :focus-visible {
@@ -330,9 +333,11 @@ section { padding: var(--section-padding) 0; }
 }
 .hero-pain-text {
   font-size: 1.1rem;
-  color: var(--color-text-sub);
+  color: var(--color-text);
+  font-weight: 500;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
   position: absolute;
   width: 100%;
   text-align: center;
@@ -340,6 +345,11 @@ section { padding: var(--section-padding) 0; }
 }
 .hero-pain-text.active {
   opacity: 1;
+  transform: translateY(0);
+  background: rgba(59, 130, 246, 0.08);
+  padding: 8px 20px;
+  border-radius: 8px;
+  border-left: 3px solid var(--color-blue);
 }
 .hero-pain-text.solution {
   font-size: 1.35rem;
@@ -1046,8 +1056,19 @@ section { padding: var(--section-padding) 0; }
 }
 .flow-step {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 16px;
+  padding: 32px 20px 24px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.flow-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.1);
 }
 .flow-number {
   width: 48px;
@@ -1064,31 +1085,32 @@ section { padding: var(--section-padding) 0; }
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+  margin-bottom: 16px;
 }
 .flow-step:first-child .flow-number {
   box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
 }
 .flow-content h3 {
-  font-size: 1.05rem;
-  margin-bottom: 4px;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 700;
 }
 .flow-content p {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--color-text-sub);
 }
 .flow-content .flow-note {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-blue);
-  margin-top: 4px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: rgba(59, 130, 246, 0.06);
+  border-radius: 6px;
+  display: inline-block;
 }
 .flow-line {
-  position: absolute;
-  left: 43px;
-  top: 48px;
-  bottom: 48px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--color-blue), var(--color-cyan));
-  opacity: 0.2;
-  z-index: 0;
+  display: none;
 }
 
 /* ============================================
@@ -1255,6 +1277,85 @@ section { padding: var(--section-padding) 0; }
 }
 
 /* ============================================
+   Responsive: Mobile (<768px)
+   ============================================ */
+@media (max-width: 767px) {
+  .sp-none { display: none; }
+
+  .hero-content h1 {
+    font-size: 1.75rem;
+    line-height: 1.35;
+  }
+  .hero-content .subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  .service-intro p {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .ba-cta-wrapper p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  #final-cta h2 {
+    font-size: 1.45rem;
+    line-height: 1.4;
+  }
+  #final-cta p {
+    font-size: 0.95rem;
+  }
+
+  /* ワークフローノード: 見切れ防止 */
+  .pc-screen {
+    padding: 12px 8px;
+  }
+  .workflow-container {
+    gap: 2px;
+  }
+  .wf-node {
+    min-width: 46px;
+    padding: 6px 4px;
+    font-size: 0.55rem;
+  }
+  .wf-node-icon {
+    font-size: 0.9rem;
+  }
+  .wf-arrow {
+    font-size: 0.65rem;
+  }
+  .wf-check {
+    width: 16px;
+    height: 16px;
+    font-size: 0.5rem;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+/* 超小型端末 (<375px) */
+@media (max-width: 374px) {
+  .wf-node {
+    min-width: 40px;
+    padding: 5px 3px;
+    font-size: 0.5rem;
+  }
+  .wf-node-icon {
+    font-size: 0.8rem;
+  }
+  .wf-arrow {
+    font-size: 0.55rem;
+  }
+  .workflow-container {
+    gap: 1px;
+  }
+}
+
+/* ============================================
    Responsive: Tablet (768px+)
    ============================================ */
 @media (min-width: 768px) {
@@ -1322,8 +1423,9 @@ section { padding: var(--section-padding) 0; }
   .flow-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+  .service-intro p { font-size: 1.15rem; }
   .count-number { font-size: 4rem; }
-  .case-body h3 { font-size: 1.35rem; white-space: nowrap; }
+  .case-body h3 { font-size: 1.35rem; }
   #final-cta h2 { font-size: 2.75rem; }
   #final-cta p { font-size: 1.15rem; }
   .iphone-mockup {
@@ -1362,11 +1464,11 @@ section { padding: var(--section-padding) 0; }
   <div class="hero-glow hero-glow-2"></div>
   <div class="hero-content">
     <p class="logo" style="font-size:1.1rem; margin-bottom:20px;">RakuFlow</p>
-    <h1>その手作業、<br>まだ続けますか？</h1>
+    <h1>その手作業、<br class="sp-none">まだ続けますか？</h1>
     <div class="hero-rotating-text" id="hero-rotating">
       <p class="hero-pain-text active">また同じメールを手打ち…</p>
     </div>
-    <p class="subtitle">RakuFlowは、あなたの業務に合わせた完全オーダーメイドの自動化で、<br>売上アップとコスト削減を同時に実現します。</p>
+    <p class="subtitle">RakuFlowは、あなたの業務に合わせた完全オーダーメイドの自動化で、<br class="sp-none">売上アップとコスト削減を同時に実現します。</p>
     <div class="hero-cta">
       <a href="#final-cta" class="btn btn-primary" aria-label="まずは無料で相談する">まずは無料で相談する</a>
     </div>
@@ -1436,13 +1538,13 @@ section { padding: var(--section-padding) 0; }
 <!-- Services Section -->
 <section id="services" class="bg-white">
   <div class="container">
-    <h2 class="fade-in-up">あなたの"めんどくさい"を、<br>仕組みが代わりにやります。</h2>
+    <h2 class="fade-in-up">あなたの"めんどくさい"を、<br class="sp-none">仕組みが代わりにやります。</h2>
     <div class="service-intro fade-in-up">
-      <p>RakuFlowは、n8nを活用した業務自動化サービスです。<br>
-      メール送信、予約管理、データ集計、SNS連携、顧客対応——<br>
+      <p>RakuFlowは、n8nを活用した業務自動化サービスです。<br class="sp-none">
+      メール送信、予約管理、データ集計、SNS連携、顧客対応——<br class="sp-none">
       あらゆる繰り返し業務を、あなたの業務に最適な形で自動化します。</p>
-      <p style="margin-top:16px;">既製品のツールを導入するのではなく、<br>
-      あなたの業務フローを深く理解した上で、<br>
+      <p style="margin-top:16px;">既製品のツールを導入するのではなく、<br class="sp-none">
+      あなたの業務フローを深く理解した上で、<br class="sp-none">
       ゼロから最適なワークフローを設計・構築します。</p>
     </div>
     <div class="service-grid">
@@ -1501,7 +1603,7 @@ section { padding: var(--section-padding) 0; }
           </div>
         </div>
         <div class="ba-timer" id="before-timer">0:00</div>
-        <div class="ba-badge-wrapper"><span class="ba-badge ba-badge-red" id="before-badge">手作業：15分</span></div>
+        <div class="ba-badge-wrapper"><span class="ba-badge ba-badge-red" id="before-badge">手作業：1時間</span></div>
       </div>
       <!-- After Panel -->
       <div class="ba-panel">
@@ -1562,7 +1664,7 @@ section { padding: var(--section-padding) 0; }
 <!-- Smartphone Notification Demo -->
 <section id="smartphone-demo" class="bg-white">
   <div class="container">
-    <h2 class="fade-in-up">あなたが寝ている間も、<br>RakuFlowが働いています。</h2>
+    <h2 class="fade-in-up">あなたが寝ている間も、<br class="sp-none">RakuFlowが働いています。</h2>
     <div class="phone-scene fade-in-up">
       <div class="phone-side-text phone-side-left" id="phone-text-left">
         <div class="phone-side-item">
@@ -1694,7 +1796,7 @@ section { padding: var(--section-padding) 0; }
         <div class="case-band case-band-cyan"></div>
         <div class="case-body">
           <span class="case-tag case-tag-cyan">顧客向けサービスの自動化</span>
-          <h3>整骨院・治療院向け LINE予約AIチャットボットの構築</h3>
+          <h3>整骨院向け LINE予約AIチャットボットの構築</h3>
           <p>整骨院・治療院様向けに、LINE公式アカウントと連携した予約AIチャットボットを構築。患者様がLINEのトーク画面から24時間いつでも予約・変更・キャンセルができる仕組みを実現しました。受付スタッフの電話対応の負担を大幅に軽減しながら、患者様の利便性も向上。現在、複数の治療院・整骨院様にご導入いただいています。</p>
           <ul class="case-tasks">
             <li>LINEチャットボットによる自動予約受付（24時間対応）</li>
@@ -1729,6 +1831,10 @@ section { padding: var(--section-padding) 0; }
           <span class="count-sub-item">見積書・納品書作成</span>
           <span class="count-sub-item">メール対応・返信</span>
           <span class="count-sub-item">スケジュール調整</span>
+          <span class="count-sub-item">顧客情報の転記・管理</span>
+          <span class="count-sub-item">在庫管理・発注処理</span>
+          <span class="count-sub-item">売上集計・レポート作成</span>
+          <span class="count-sub-item">SNS投稿・更新作業</span>
         </div>
       </div>
       <div class="count-item fade-in-up">
@@ -1760,7 +1866,7 @@ section { padding: var(--section-padding) 0; }
         <div class="count-number-wrapper">
           <span class="count-number" data-target="3">0</span><span class="count-suffix">秒</span>
         </div>
-        <p class="count-label">手作業15分の業務を自動処理</p>
+        <p class="count-label">手作業1時間の業務を自動処理</p>
         <div class="count-sub-items">
           <span class="count-sub-item">メール送信・転送</span>
           <span class="count-sub-item">データ転記</span>
@@ -1905,8 +2011,8 @@ section { padding: var(--section-padding) 0; }
 <section id="final-cta">
   <div class="container">
     <p class="cta-eyebrow fade-in-up">＼ あなたの業務を変える第一歩 ／</p>
-    <h2 class="fade-in-up">まずは30分の無料相談から、<br>あなたの業務を楽にする第一歩を。</h2>
-    <p class="fade-in-up">「自動化で何ができるか分からない」という段階でも大歓迎です。<br>あなたの業務のお悩みをお聞かせください。<br>最適な自動化のかたちを、一緒に考えましょう。</p>
+    <h2 class="fade-in-up">まずは30分の無料相談から、<br class="sp-none">あなたの業務を楽にする第一歩を。</h2>
+    <p class="fade-in-up">「自動化で何ができるか分からない」という段階でも大歓迎です。<br class="sp-none">あなたの業務のお悩みをお聞かせください。<br class="sp-none">最適な自動化のかたちを、一緒に考えましょう。</p>
     <div class="fade-in-up">
       <a href="#" class="btn btn-white" aria-label="無料相談に申し込む">無料相談に申し込む →</a>
     </div>
@@ -2259,7 +2365,7 @@ section { padding: var(--section-padding) 0; }
     var arrows = document.querySelectorAll('.wf-arrow');
 
     /* --- Before Side Animation --- */
-    var beforeDuration = 10000;
+    var beforeDuration = 14000;
     var beforeStart = performance.now();
 
     // Phase 1: Email copy-paste (0-3s)
@@ -2278,7 +2384,7 @@ section { padding: var(--section-padding) 0; }
     baTimeouts.push(setTimeout(function() { var hl = document.getElementById('hl2'); if(hl) hl.classList.remove('active'); }, 1700));
     baTimeouts.push(setTimeout(function() { var el = document.getElementById('el3'); if(el) el.classList.add('show'); }, 2000));
 
-    // Phase 2: Spreadsheet (2500-5000ms)
+    // Phase 2: Spreadsheet (2200-4400ms)
     baTimeouts.push(setTimeout(function() {
       beforeScreen.innerHTML = '<div style="margin-bottom:8px;font-weight:600;color:#374151;">📊 データ入力</div>';
       var table = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;font-size:0.65rem;">';
@@ -2308,9 +2414,9 @@ section { padding: var(--section-padding) 0; }
           if (el) typeText(el, c.text, 45);
         }, c.delay));
       });
-    }, 2500));
+    }, 2200));
 
-    // Phase 3: Booking confirmation with manual checking animation (5000-7500ms)
+    // Phase 3: Booking confirmation (4500-6700ms)
     baTimeouts.push(setTimeout(function() {
       var resHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">📅 予約確認</div>';
       var reservations = [
@@ -2348,9 +2454,9 @@ section { padding: var(--section-padding) 0; }
           if (btn) { btn.style.background = '#D1D5DB'; btn.textContent = '済'; btn.style.transform = 'scale(1)'; }
         }, i * 700 + 500));
       });
-    }, 5000));
+    }, 4500));
 
-    // Phase 4: Invoice creation (7500-10000ms)
+    // Phase 4: Invoice creation (6800-8800ms)
     baTimeouts.push(setTimeout(function() {
       var invoiceHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">📄 請求書発行</div>';
       invoiceHtml += '<div style="background:white;border:1px solid #D1D5DB;border-radius:4px;padding:8px;font-size:0.6rem;">';
@@ -2377,7 +2483,90 @@ section { padding: var(--section-padding) 0; }
           if (el) typeText(el, f.text, 40);
         }, f.delay));
       });
-    }, 7500));
+    }, 6800));
+
+    // Phase 5: Monthly report creation (9000-11200ms)
+    baTimeouts.push(setTimeout(function() {
+      var rptHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">📈 月次レポート作成</div>';
+      rptHtml += '<div style="background:white;border:1px solid #D1D5DB;border-radius:4px;padding:8px;font-size:0.6rem;">';
+      rptHtml += '<div style="text-align:center;font-weight:600;color:#374151;margin-bottom:6px;font-size:0.7rem;border-bottom:1px solid #E5E7EB;padding-bottom:4px;">月次売上レポート</div>';
+      rptHtml += '<div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:2px 6px;font-size:0.6rem;">';
+      rptHtml += '<div style="font-weight:600;color:#9CA3AF;">月</div><div style="font-weight:600;color:#9CA3AF;">売上</div><div style="font-weight:600;color:#9CA3AF;">経費</div>';
+      rptHtml += '<div>1月</div><div id="rpt1" style="color:#374151;"></div><div id="rpt2" style="color:#374151;"></div>';
+      rptHtml += '<div>2月</div><div id="rpt3" style="color:#374151;"></div><div id="rpt4" style="color:#374151;"></div>';
+      rptHtml += '<div>3月</div><div id="rpt5" style="color:#374151;"></div><div id="rpt6" style="color:#374151;"></div>';
+      rptHtml += '<div style="font-weight:600;border-top:1px solid #E5E7EB;padding-top:2px;">合計</div>';
+      rptHtml += '<div id="rpt-total1" style="font-weight:600;color:#2563EB;border-top:1px solid #E5E7EB;padding-top:2px;"></div>';
+      rptHtml += '<div id="rpt-total2" style="font-weight:600;color:#DC2626;border-top:1px solid #E5E7EB;padding-top:2px;"></div>';
+      rptHtml += '</div></div>';
+      beforeScreen.innerHTML = rptHtml;
+
+      var rptCells = [
+        { id: 'rpt1', text: '¥1,250,000', delay: 200 },
+        { id: 'rpt2', text: '¥480,000',   delay: 500 },
+        { id: 'rpt3', text: '¥1,380,000', delay: 800 },
+        { id: 'rpt4', text: '¥520,000',   delay: 1100 },
+        { id: 'rpt5', text: '¥1,150,000', delay: 1400 },
+        { id: 'rpt6', text: '¥490,000',   delay: 1700 },
+        { id: 'rpt-total1', text: '¥3,780,000', delay: 2000 },
+        { id: 'rpt-total2', text: '¥1,490,000', delay: 2000 }
+      ];
+      rptCells.forEach(function(c) {
+        baTimeouts.push(setTimeout(function() {
+          var el = document.getElementById(c.id);
+          if (el) typeText(el, c.text, 35);
+        }, c.delay));
+      });
+    }, 9000));
+
+    // Phase 6: Customer inquiry response (11200-14000ms)
+    baTimeouts.push(setTimeout(function() {
+      var csHtml = '<div style="margin-bottom:6px;font-weight:600;color:#374151;">💬 問い合わせ対応</div>';
+      var inquiries = [
+        { name: '佐藤様', msg: '料金プランを教えてください', id: 'inq1' },
+        { name: '高橋様', msg: '導入までの期間は？', id: 'inq2' },
+        { name: '伊藤様', msg: 'デモの予約をしたいです', id: 'inq3' }
+      ];
+      inquiries.forEach(function(q) {
+        csHtml += '<div id="' + q.id + '" style="padding:5px 8px;margin-bottom:4px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:4px;font-size:0.6rem;opacity:0;transition:opacity 0.3s;">';
+        csHtml += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">';
+        csHtml += '<span style="font-weight:600;color:#374151;">' + q.name + '</span>';
+        csHtml += '<span id="' + q.id + '-badge" style="background:#EF4444;color:white;font-size:0.5rem;padding:1px 5px;border-radius:8px;">未読</span>';
+        csHtml += '</div>';
+        csHtml += '<div style="color:#6B7280;font-size:0.55rem;margin-bottom:3px;">「' + q.msg + '」</div>';
+        csHtml += '<div id="' + q.id + '-reply" style="color:#2563EB;font-size:0.55rem;min-height:12px;"></div>';
+        csHtml += '</div>';
+      });
+      beforeScreen.innerHTML = csHtml;
+
+      var replies = [
+        { inqId: 'inq1', text: '返信中：プランは3種類ございまして…', delay: 0 },
+        { inqId: 'inq2', text: '返信中：最短2週間で導入可能です…', delay: 800 },
+        { inqId: 'inq3', text: '返信中：来週の空き状況を確認し…', delay: 1600 }
+      ];
+      replies.forEach(function(r, i) {
+        // Show card
+        baTimeouts.push(setTimeout(function() {
+          var card = document.getElementById(r.inqId);
+          if (card) card.style.opacity = '1';
+        }, r.delay));
+        // Change badge to "対応中"
+        baTimeouts.push(setTimeout(function() {
+          var badge = document.getElementById(r.inqId + '-badge');
+          if (badge) { badge.textContent = '対応中'; badge.style.background = '#F59E0B'; }
+        }, r.delay + 300));
+        // Type reply
+        baTimeouts.push(setTimeout(function() {
+          var replyEl = document.getElementById(r.inqId + '-reply');
+          if (replyEl) typeText(replyEl, r.text, 30);
+        }, r.delay + 500));
+        // Change badge to "送信済"
+        baTimeouts.push(setTimeout(function() {
+          var badge = document.getElementById(r.inqId + '-badge');
+          if (badge) { badge.textContent = '送信済'; badge.style.background = '#16A34A'; }
+        }, r.delay + 700));
+      });
+    }, 11200));
 
     // Before timer
     var baTimerRunning = true;
@@ -2386,14 +2575,14 @@ section { padding: var(--section-padding) 0; }
         if (!baTimerRunning) return;
         var elapsed = performance.now() - beforeStart;
         var progress = Math.min(elapsed / beforeDuration, 1);
-        var mappedTime = Math.round(easeInQuad(progress) * 15);
+        var mappedTime = Math.round(easeInQuad(progress) * 60);
         var mins = Math.floor(mappedTime);
         beforeTimer.textContent = mins + ':00';
         if (progress < 1) {
           var id = requestAnimationFrame(tick);
           baRafIds.push(id);
         } else {
-          beforeTimer.textContent = '15:00';
+          beforeTimer.textContent = '60:00';
           beforeBadge.classList.add('show');
           checkBothDone();
         }
@@ -2441,20 +2630,23 @@ section { padding: var(--section-padding) 0; }
     baRafIds.push(afterRafId);
 
     function checkBothDone() {
-      if (beforeBadge.classList.contains('show') && afterBadge.classList.contains('show')) {
+      // After完了時点でCTAを即表示（Before完了を待たない）
+      if (afterBadge.classList.contains('show') && !baCta.classList.contains('show')) {
         baTimeouts.push(setTimeout(function() {
           baCta.classList.add('show');
-          // Wait 4 seconds, then restart the cycle
-          baTimeouts.push(setTimeout(function() {
-            baTimerRunning = false;
-            afterTimerRunning = false;
-            if (baVisible) {
-              runBeforeAfterCycle();
-            } else {
-              baRunning = false;
-            }
-          }, 4000));
         }, 600));
+      }
+      // リスタートは両方完了後（Beforeアニメーションが途中で切れないように）
+      if (beforeBadge.classList.contains('show') && afterBadge.classList.contains('show')) {
+        baTimeouts.push(setTimeout(function() {
+          baTimerRunning = false;
+          afterTimerRunning = false;
+          if (baVisible) {
+            runBeforeAfterCycle();
+          } else {
+            baRunning = false;
+          }
+        }, 4000));
       }
     }
   }
